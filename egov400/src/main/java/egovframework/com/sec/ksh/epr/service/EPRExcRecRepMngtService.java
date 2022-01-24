@@ -1,0 +1,61 @@
+package egovframework.com.sec.ksh.epr.service;
+
+import java.util.List;
+
+import egovframework.com.sec.ram.service.AuthorManage;
+import egovframework.com.sec.ram.service.AuthorManageVO;
+
+/**
+ * 수행실적목록에 관한 서비스 인터페이스 클래스를 정의한다.
+ * @author 공통서비스 개발팀 이문준
+ * @since 2009.06.01
+ * @version 1.0
+ * @sees
+ *
+ * <pre>
+ * << 개정이력(Modification Information) >>
+ *   
+ *   수정일      수정자           수정내용
+ *  -------    --------    ---------------------------
+ *   2009.03.20  이문준          최초 생성
+ *
+ * </pre>
+ */
+
+public interface EPRExcRecRepMngtService {
+    /**
+	 * 모든 수행실적목록을 조회한다.
+	 * @param eprExcRecRepVO EPRExcRecRepVO
+	 * @return List<EPRExcRecRepVO>
+	 * @exception Exception
+	 */
+	public List<EPRExcRecRepVO> selectEPRExcRecRepList(EPRExcRecRepVO eprExcRecRepVO) throws Exception;
+	
+	/**
+	 * 수행실적목록을 화면에서 입력하여 입력항목의 정합성을 체크하고 데이터베이스에 저장
+	 * @param eprExcRecRep AuthorManage
+	 * @exception Exception
+	 */
+	public void insertEPRExcRecRep(EPRExcRecRep eprExcRecRep) throws Exception;
+	
+	/**
+	 * 불필요한 수행실적목록을 데이터베이스에서 삭제
+	 * @param excPerRepSeq String
+	 * @exception Exception
+	 */
+	public void deleteEPRExcRecRep(String excPerRepSeq) throws Exception;
+	
+	/**
+	 * 개별사용자에게 할당된 권한 조회
+	 * @param excPerRepSeq String
+	 * @exception Exception
+	 */
+	public EPRExcRecRepVO selectEPRExcRecRepDtl(String excPerRepSeq) throws Exception;
+	
+	/**
+	 * 목록조회 카운트를 반환한다
+	 * @exception Exception
+	 */
+	public int selectEPRExcRecRepListTotCnt(EPRExcRecRepVO eprExcRecRepVO) throws Exception;
+	
+}

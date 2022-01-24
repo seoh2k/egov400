@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="eprExcRecRepMngtDAO">
+
+    <resultMap id="eprExcRecRep" type="egovframework.com.sec.ksh.epr.service.EPRExcRecRepVO">
+        <result property="excPerRepSeq" column="EXC_PER_REP_SEQ"/>
+        <result property="excPerRepName" column="EXC_PER_REP_NAME"/>
+        <result property="progrsStatCode" column="PROGRS_STAT_CODE"/>
+        <result property="progrsStatCodeNm" column="PROGRS_STAT_CODE_NM"/>
+        <result property="excDate" column="EXC_DATE"/>
+        <result property="regDate" column="REG_DATE"/>
+        <result property="cngDate" column="CNG_DATE"/>
+        <result property="regId" column="REG_ID"/>
+        <result property="cngId" column="CNG_ID"/>
+    </resultMap>
+
+    <select id="selectEPRExcRecRepList" parameterType="egovframework.com.sec.ksh.epr.service.EPRExcRecRepVO" resultMap="eprExcRecRep">
+            SELECT
+				EXC_PER_REP_SEQ
+				, EXC_PER_REP_NAME
+				, PROGRS_STAT_CODE
+				, '코드값' as PROGRS_STAT_CODE_NM
+				, to_char(EXC_DATE, 'YYYY-MM-DD HH24:MI:SS') as EXC_DATE
+				, to_char(REG_DATE, 'YYYY-MM-DD HH24:MI:SS') as REG_DATE
+				, to_char(CNG_DATE, 'YYYY-MM-DD HH24:MI:SS') as CNG_DATE
+				, REG_ID
+				, CNG_ID
+			FROM PUBLIC.TB_EXC_REC_REP
+			WHERE 1=1
+			<if test="searchCondition == 1">AND
+                EXC_PER_REP_NAME LIKE CONCAT('%' , #{searchKeyword}, '%')
+            </if>
+            ORDER BY CNG_DATE DESC
+            LIMIT #{recordCountPerPage} OFFSET #{firstIndex}      
+    </select>
+    
+    <select id="selectEPRExcRecRepListTotCnt" parameterType="egovframework.com.sec.ksh.epr.service.EPRExcRecRepVO" resultType="int">
+            SELECT 
+            	COUNT(*) totcnt
+            FROM TB_EXC_REC_REP
+            WHERE 1=1
+    </select>
+    
+    <insert id="insertEPRExcRecRep" parameterType="egovframework.com.sec.ksh.epr.service.EPRExcRecRep">
+        
+            INSERT INTO PUBLIC.TB_EXC_REC_REP
+					(EXC_PER_REP_SEQ
+					, EXC_PER_REP_NAME
+					, PROGRS_STAT_CODE
+					, EXC_DATE
+					, REG_DATE
+					, CNG_DATE
+					, REG_ID
+					, CNG_ID)
+			VALUES(to_char(now(), 'YYYYMMDD')|| lpad(nextval('exc_per_rep_seq')::varchar, 6, '0')
+					, #{excPerRepName}
+					, #{progrsStatCode}
+					, NOW()
+					, NOW()
+					, NOW()
+					, #{regId}
+					, #{cngId})
+					
+    </insert>
+    
+    <delete id="deleteEPRExcRecRep" parameterType="String">
+        
+            DELETE FROM PUBLIC.TB_EXC_REC_REP 
+            WHERE EXC_PER_REP_SEQ=#{excPerRepSeq}
+        
+    </delete>
+    
+    <select id="selectEPRExcRecRepDtl" parameterType="String" resultMap="eprExcRecRep">
+        
+            SELECT
+				EXC_PER_REP_SEQ
+				, EXC_PER_REP_NAME
+				, PROGRS_STAT_CODE
+				, '코드값' as PROGRS_STAT_CODE_NM
+				, to_char(EXC_DATE, 'YYYY-MM-DD HH24:MI:SS') as EXC_DATE
+				, to_char(REG_DATE, 'YYYY-MM-DD HH24:MI:SS') as REG_DATE
+				, to_char(CNG_DATE, 'YYYY-MM-DD HH24:MI:SS') as CNG_DATE
+				, REG_ID
+				, CNG_ID
+			FROM PUBLIC.TB_EXC_REC_REP
+			WHERE EXC_PER_REP_SEQ=#{excPerRepSeq}
+        
+    </select>
+</mapper>

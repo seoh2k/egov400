@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="eprEqpmnRepDAO">
+
+    <resultMap id="eprEqpmnRep" type="egovframework.com.sec.ksh.epr.service.EPREqpmnRepVO">
+        <result property="excPerRepSeq" column="EXC_PER_REP_SEQ"/>
+        <result property="eqpmnNo" column="EQPMN_NO"/>
+        <result property="eqpmnName" column="EQPMN_NAME"/>
+        <result property="stndrd" column="STNDRD"/>
+        <result property="regNo" column="REG_NO"/>
+        <result property="gradCode" column="GRAD_CODE"/>
+        <result property="regDate" column="REG_DATE"/>
+        <result property="regId" column="REG_ID"/>
+        <result property="cngDate" column="CNG_DATE"/>
+        <result property="cngId" column="CNG_ID"/>
+    </resultMap>
+
+    <select id="selectEPREqpmnRepList" parameterType="String" resultMap="eprEqpmnRep">
+            SELECT 
+				EXC_PER_REP_SEQ
+				, EQPMN_NO
+				, EQPMN_NAME
+				, STNDRD
+				, REG_NO
+				, GRAD_CODE
+				, REG_DATE
+				, REG_ID
+				, CNG_DATE
+				, CNG_ID
+			FROM PUBLIC.TB_EQPMN_REP
+			WHERE EXC_PER_REP_SEQ=#{excPerRepSeq}   
+    </select>
+    
+    <delete id="deleteEPREqpmnRepAll" parameterType="String">
+        
+            DELETE FROM PUBLIC.TB_EQPMN_REP
+            WHERE EXC_PER_REP_SEQ=#{excPerRepSeq}
+        
+    </delete>
+    
+    <insert id="insertEPREqpmnRep" parameterType="egovframework.com.sec.ksh.epr.service.EPREqpmnRep">
+        
+		INSERT INTO PUBLIC.TB_EQPMN_REP(
+			EXC_PER_REP_SEQ
+			, EQPMN_NO
+			, EQPMN_NAME
+			, STNDRD
+			, REG_NO
+			, GRAD_CODE
+			, REG_DATE
+			, REG_ID
+			, CNG_DATE
+			, CNG_ID)
+		VALUES(
+			#{excPerRepSeq}
+			, #{eqpmnNo}
+			, #{eqpmnName}
+			, #{stndrd}
+			, #{regNo}
+			, #{gradCode}
+			, now()
+			, #{regId}
+			, now()
+			, #{cngId});
+					
+    </insert>
+</mapper>
