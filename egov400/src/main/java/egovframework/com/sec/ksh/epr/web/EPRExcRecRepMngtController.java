@@ -8,6 +8,7 @@ import egovframework.com.sec.ksh.epr.service.EPREqpmnRepVO;
 import egovframework.com.sec.ksh.epr.service.EPRExcRecRep;
 import egovframework.com.sec.ksh.epr.service.EPRExcRecRepMngtService;
 import egovframework.com.sec.ksh.epr.service.EPRExcRecRepVO;
+import egovframework.com.sec.ksh.epr.service.EPRPerRep;
 import egovframework.com.sec.ksh.epr.service.EPRPerRepService;
 import egovframework.com.sec.ksh.epr.service.EPRPerRepVO;
 
@@ -59,7 +60,7 @@ public class EPRExcRecRepMngtController {
 //    @IncludedInfo(name="수행실적신고관리", listUrl="/sec/ksh/epr/selectExcRecRepListPageVw.do", order = 60,gid = 20)
 	@RequestMapping(value = "/sec/ksh/epr/selectExcRecRepListPageVw.do")
 	public String selectExcRecRepListPageVw(@ModelAttribute("eprExcRecRepVO") EPRExcRecRepVO eprExcRecRepVO,
-			ModelMap model) throws Exception {
+											ModelMap model) throws Exception {
 
 		/** EgovPropertyService.sample */
 		eprExcRecRepVO.setPageUnit(propertiesService.getInt("pageUnit"));
@@ -170,7 +171,10 @@ public class EPRExcRecRepMngtController {
 	 * @exception Exception
 	 */
 	 @RequestMapping("/sec/ksh/epr/insertEPREqpmnRepVw.do") 
-	 public String insertEPREqpmnRepVw(@ModelAttribute("eprEqpmnRep") EPREqpmnRep eprEqpmnRep) throws Exception { 
+	 public String insertEPREqpmnRepVw(@ModelAttribute("eprEqpmnRep") EPREqpmnRep eprEqpmnRep,
+			 							@RequestParam("excPerRepSeq") String excPerRepSeq,
+			 							ModelMap model) throws Exception {
+		 model.addAttribute("excPerRepSeq", excPerRepSeq);
 		 return "egovframework/com/sec/ksh/epr/EPREqpmnRepInsert";
 	 }
 
@@ -179,20 +183,49 @@ public class EPRExcRecRepMngtController {
 	 * 
 	 * @exception Exception
 	 */
-	/*
-	 * @RequestMapping(value="/sec/ksh/epr/EPREqpmnRepInsert.do") public String
-	 * insertEPREqpmnRep(@ModelAttribute("eprEqpmnRep") EPREqpmnRep eprEqpmnRep,
+	 @RequestMapping(value="/sec/ksh/epr/EPREqpmnRepInsert.do") 
+	 public String insertEPREqpmnRep(@ModelAttribute("eprEqpmnRep") EPREqpmnRep eprEqpmnRep,
+						 			@RequestParam("excPerRepSeq") String excPerRepSeq,
+						 			BindingResult bindingResult, 
+						 			ModelMap model) throws Exception {
+		beanValidator.validate(eprEqpmnRep, bindingResult); //validation 수행
+	 
+		if (bindingResult.hasErrors()) { 
+			 return "egovframework/com/sec/ksh/epr/EPREqpmnRepInsert"; 
+		} else {
+			eprEqpmnRepService.insertEPREqpmnRep(eprEqpmnRep);
+			model.addAttribute("message", egovMessageSource.getMessage("success.common.insert")); 
+			return "forward:/sec/ksh/epr/selectExcRecRepDtlVw.do?excPerRepSeq="+eprEqpmnRep.getExcPerRepSeq(); 
+		}
+	}
+	 
+	 /**
+	 * 실적신고 등록화면 이동
 	 * 
-	 * @RequestParam("excPerRepSeq") String excPerRepSeq, BindingResult
-	 * bindingResult, ModelMap model) throws Exception {
-	 * beanValidator.validate(eprEqpmnRep, bindingResult); //validation 수행
-	 * 
-	 * if (bindingResult.hasErrors()) { return
-	 * "egovframework/com/sec/ksh/epr/EPREqpmnRepInsert"; } else {
-	 * eprEqpmnRepService.insertEPREqpmnRep(eprEqpmnRep);
-	 * model.addAttribute("message",
-	 * egovMessageSource.getMessage("success.common.insert")); return
-	 * "forward:/sec/ksh/epr/selectExcRecRepDtlVw.do?excPerRepSeq="+excPerRepSeq; }
-	 * }
+	 * @exception Exception
 	 */
+	 @RequestMapping("/sec/ksh/epr/insertEPRPerRepVw.do") 
+	 public String insertEPRPerRepVw(@ModelAttribute("eprPerRep") EPRPerRep eprPerRep) throws Exception { 
+		 return "egovframework/com/sec/ksh/epr/EPRPerRepInsert";
+	 }
+	 
+	 /**
+	 * 실적신고 세부정보를 등록한다.
+	 * 
+	 * @exception Exception
+	 */
+	 @RequestMapping(value="/sec/ksh/epr/EPRPerRepInsert.do") 
+	 public String insertEPRPerRep(@ModelAttribute("eprPerRep") EPRPerRep eprPerRep,
+			 						BindingResult bindingResult, 
+			 						ModelMap model) throws Exception {
+		 beanValidator.validate(eprPerRep, bindingResult); //validation 수행
+		 
+		 if (bindingResult.hasErrors()) { 
+			 return "egovframework/com/sec/ksh/epr/EPRPerRepInsert"; 
+		 } else {
+			 eprPerRepService.insertEPRPerRep(eprPerRep);
+			 model.addAttribute("message", egovMessageSource.getMessage("success.common.insert")); 
+			 return "forward:/sec/ksh/epr/selectExcRecRepDtlVw.do?excPerRepSeq="+eprPerRep.getExcPerRepSeq(); 
+		 } 
+	 }
 }

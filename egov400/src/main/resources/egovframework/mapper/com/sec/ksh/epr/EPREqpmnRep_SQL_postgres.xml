@@ -54,7 +54,7 @@
 			, CNG_ID)
 		VALUES(
 			#{excPerRepSeq}
-			, #{eqpmnNo}
+			, nextval('eqpmn_rep_seq')
 			, #{eqpmnName}
 			, #{stndrd}
 			, #{regNo}
@@ -62,7 +62,7 @@
 			, now()
 			, #{regId}
 			, now()
-			, #{cngId});
+			, #{cngId})
 					
     </insert>
 </mapper>

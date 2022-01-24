@@ -2,6 +2,7 @@ package egovframework.com.sec.ksh.epr.service.impl;
 
 import java.util.List;
 
+import egovframework.com.sec.ksh.epr.service.EPRPerRep;
 import egovframework.com.sec.ksh.epr.service.EPRPerRepService;
 import egovframework.com.sec.ksh.epr.service.EPRPerRepVO;
 
@@ -24,5 +25,9 @@ public class EPRPerRepServiceImpl extends EgovAbstractServiceImpl implements EPR
     public void deleteEPRPerRepAll(String excPerRepSeq) throws Exception {
     	eprPerRepDAO.deleteEPRPerRepAll(excPerRepSeq);
     }
+    
+    public void insertEPRPerRep(EPRPerRep eprPerRep) throws Exception {
+    	eprPerRepDAO.insertEPRPerRep(eprPerRep);
+	}
 
 }

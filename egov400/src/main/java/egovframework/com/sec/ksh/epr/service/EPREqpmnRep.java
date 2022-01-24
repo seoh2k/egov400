@@ -119,6 +119,5 @@ public class EPREqpmnRep extends ComDefaultVO {
 	public void setCngId(String cngId) {
 		this.cngId = cngId;
 	}
-	
 
 }

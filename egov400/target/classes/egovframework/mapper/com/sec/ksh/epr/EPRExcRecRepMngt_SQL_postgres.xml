@@ -20,18 +20,18 @@
 				EXC_PER_REP_SEQ
 				, EXC_PER_REP_NAME
 				, PROGRS_STAT_CODE
+				, EXC_DATE
 				, '코드값' as PROGRS_STAT_CODE_NM
-				, to_char(EXC_DATE, 'YYYY-MM-DD HH24:MI:SS') as EXC_DATE
 				, to_char(REG_DATE, 'YYYY-MM-DD HH24:MI:SS') as REG_DATE
 				, to_char(CNG_DATE, 'YYYY-MM-DD HH24:MI:SS') as CNG_DATE
 				, REG_ID
 				, CNG_ID
 			FROM PUBLIC.TB_EXC_REC_REP
 			WHERE 1=1
-			<if test="searchCondition == 1">AND
-                EXC_PER_REP_NAME LIKE CONCAT('%' , #{searchKeyword}, '%')
+			<if test="searchCondition == 1">
+				AND EXC_DATE LIKE CONCAT('%' , #{searchKeyword}, '%')
             </if>
-            ORDER BY CNG_DATE DESC
+            ORDER BY EXC_DATE DESC
             LIMIT #{recordCountPerPage} OFFSET #{firstIndex}      
     </select>
     
@@ -44,23 +44,24 @@
     
     <insert id="insertEPRExcRecRep" parameterType="egovframework.com.sec.ksh.epr.service.EPRExcRecRep">
         
-            INSERT INTO PUBLIC.TB_EXC_REC_REP
-					(EXC_PER_REP_SEQ
-					, EXC_PER_REP_NAME
-					, PROGRS_STAT_CODE
-					, EXC_DATE
-					, REG_DATE
-					, CNG_DATE
-					, REG_ID
-					, CNG_ID)
-			VALUES(to_char(now(), 'YYYYMMDD')|| lpad(nextval('exc_per_rep_seq')::varchar, 6, '0')
-					, #{excPerRepName}
-					, #{progrsStatCode}
-					, NOW()
-					, NOW()
-					, NOW()
-					, #{regId}
-					, #{cngId})
+		INSERT INTO PUBLIC.TB_EXC_REC_REP
+			(EXC_PER_REP_SEQ
+			, EXC_PER_REP_NAME
+			, PROGRS_STAT_CODE
+			, EXC_DATE
+			, REG_DATE
+			, CNG_DATE
+			, REG_ID
+			, CNG_ID)
+		VALUES(
+			to_char(now(), 'YYYYMMDD')|| lpad(nextval('exc_per_rep_seq')::varchar, 6, '0')
+			, #{excPerRepName}
+			, #{progrsStatCode}
+			, #{excDate}
+			, NOW()
+			, NOW()
+			, #{regId}
+			, #{cngId})
 					
     </insert>
     
@@ -74,15 +75,8 @@
     <select id="selectEPRExcRecRepDtl" parameterType="String" resultMap="eprExcRecRep">
         
             SELECT
-				EXC_PER_REP_SEQ
-				, EXC_PER_REP_NAME
-				, PROGRS_STAT_CODE
-				, '코드값' as PROGRS_STAT_CODE_NM
-				, to_char(EXC_DATE, 'YYYY-MM-DD HH24:MI:SS') as EXC_DATE
-				, to_char(REG_DATE, 'YYYY-MM-DD HH24:MI:SS') as REG_DATE
-				, to_char(CNG_DATE, 'YYYY-MM-DD HH24:MI:SS') as CNG_DATE
-				, REG_ID
-				, CNG_ID
+				EXC_PER_REP_NAME
+				, EXC_DATE
 			FROM PUBLIC.TB_EXC_REC_REP
 			WHERE EXC_PER_REP_SEQ=#{excPerRepSeq}
         

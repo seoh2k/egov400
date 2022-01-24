@@ -23,4 +23,14 @@ public class EPRExcRecRepVO extends EPRExcRecRep {
 	public void setEPRExcRecRepList(List<EPRExcRecRepVO> eprExcRecRepList) {
 		this.eprExcRecRepList = eprExcRecRepList;
 	}
+	
+	private String searchExcDate;
+	
+	public String getSearchExcDate() {
+		return searchExcDate;
+	}
+
+	public void setSearchExcDate(String searchExcDate) {
+		this.searchExcDate = searchExcDate;
+	}
 }

@@ -5,7 +5,6 @@ import java.util.List;
 import egovframework.com.sec.ksh.epr.service.EPRExcRecRep;
 import egovframework.com.sec.ksh.epr.service.EPRExcRecRepMngtService;
 import egovframework.com.sec.ksh.epr.service.EPRExcRecRepVO;
-import egovframework.com.sec.ram.service.AuthorManageVO;
 
 import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
 

@@ -7,5 +7,6 @@ public interface EPRPerRepService {
 	public List<EPRPerRepVO> selectEPRPerRepList(String excPerRepSeq) throws Exception;
 	
 	public void deleteEPRPerRepAll(String excPerRepSeq) throws Exception;
-
+	
+	public void insertEPRPerRep(EPRPerRep eprPerRep) throws Exception;
 }

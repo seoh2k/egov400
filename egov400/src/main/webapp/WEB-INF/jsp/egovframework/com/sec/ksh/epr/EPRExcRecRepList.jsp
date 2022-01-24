@@ -30,11 +30,115 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <link type="text/css" rel="stylesheet" href="<c:url value='/css/egovframework/com/com.css' />">
 <script type="text/javaScript" language="javascript" defer="defer">
+function fncCheckAll() {
+    var checkField = document.listForm.delYn;
+    if(document.listForm.checkAll.checked) {
+        if(checkField) {
+            if(checkField.length > 1) {
+                for(var i=0; i < checkField.length; i++) {
+                    checkField[i].checked = true;
+                }
+            } else {
+                checkField.checked = true;
+            }
+        }
+    } else {
+        if(checkField) {
+            if(checkField.length > 1) {
+                for(var j=0; j < checkField.length; j++) {
+                    checkField[j].checked = false;
+                }
+            } else {
+                checkField.checked = false;
+            }
+        }
+    }
+}
+
+function fncManageChecked() {
+
+    var checkField = document.listForm.delYn;
+    var checkId = document.listForm.checkId;
+    var returnValue = "";
+
+    var returnBoolean = false;
+    var checkCount = 0;
+
+    if(checkField) {
+        if(checkField.length > 1) {
+            for(var i=0; i<checkField.length; i++) {
+                if(checkField[i].checked) {
+                    checkField[i].value = checkId[i].value;
+                    if(returnValue == "")
+                        returnValue = checkField[i].value;
+                    else
+                	    returnValue = returnValue + ";" + checkField[i].value;
+                    checkCount++;
+                }
+            }
+            if(checkCount > 0)
+                returnBoolean = true;
+            else {
+                alert("<spring:message code="comCopSecRam.validate.authorSelect" />"); //선택된 권한이 없습니다."
+                returnBoolean = false;
+            }
+        } else {
+            if(document.listForm.delYn.checked == false) {
+                alert("<spring:message code="comCopSecRam.validate.authorSelect" />"); //선택된 권한이 없습니다."
+                returnBoolean = false;
+            }
+            else {
+                returnValue = checkId.value;
+                returnBoolean = true;
+            }
+        }
+    } else {
+        alert("<spring:message code="comCopSecRam.validate.authorSelectResult" />"); //조회된 결과가 없습니다.
+    }
+
+    document.listForm.authorCodes.value = returnValue;
+
+    return returnBoolean;
+}
+
+function fncSelectEPRExcRecRepList(pageNo){
+    document.listForm.searchCondition.value = "1";
+    document.listForm.pageIndex.value = pageNo;
+    document.listForm.action = "<c:url value='/sec/ksh/epr/EPRExcRecRepList.do'/>";
+    document.listForm.submit();
+}
+
+function fncAddEPRExcRecRepInsert() {
+    location.replace("<c:url value='/sec/ksh/epr/EPRExcRecRepInsertView.do'/>");
+}
+
+function fncEPRExcRecRepDeleteList() {
+
+    if(fncManageChecked()) {
+    	if(confirm("<spring:message code="common.delete.msg" />")){	//삭제하시겠습니까?
+            document.listForm.action = "<c:url value='/sec/ksh/epr/EPRExcRecRepListDelete.do'/>";
+            document.listForm.submit();
+        }
+    }
+}
+
+function fncAddEPRExcRecRepView() {
+    document.listForm.action = "<c:url value='/sec/ksh/epr/EPRExcRecRepUpdate.do'/>";
+    document.listForm.submit();
+}
+
 function linkPage(pageNo){
     document.listForm.searchCondition.value = "1";
     document.listForm.pageIndex.value = pageNo;
     document.listForm.action = "<c:url value='/sec/ksh/epr/selectExcRecRepListPageVw.do'/>";
     document.listForm.submit();
+}
+
+function press() {
+
+    if (event.keyCode==13) {
+    	fncSelectEPRExcRecRepList('1');
+    }
 }
 </script>
 </head>
@@ -47,7 +151,7 @@ function linkPage(pageNo){
 	<!-- 검색영역 -->
 	<div class="search_box" title="<spring:message code="common.searchCondition.msg" />">
 		<ul>
-			<li><div style="line-height:4px;">&nbsp;</div><div><spring:message code="comCopSecRam.list.searchKeywordText" /> : </div></li><!-- 권한명 -->
+			<li><div style="line-height:4px;">&nbsp;</div><div>수행년도 : </div></li><!-- 권한명 -->
 			<!-- 검색키워드 및 조회버튼 -->
 			<li style="border: 0px solid #d2d2d2;">
 				<input class="s_input" name="searchKeyword" type="text"  size="35" title="<spring:message code="title.search" /> <spring:message code="input.input" />" value='<c:out value="${eprExcRecRepVO.searchKeyword}"/>'  maxlength="155" >
@@ -68,10 +172,10 @@ function linkPage(pageNo){
 	</colgroup>
 	<thead>
 	<tr>
-		<th class="board_th_link">수행년도</th>
+		<th>수행년도</th>
 		<th>수행실적신고명</th>
 		<th>진행상태</th>
-		<th>수행일수</th>
+		<th>수행일시</th>
 		<th>삭제</th>
 	</tr>
 	</thead>
@@ -103,9 +207,6 @@ function linkPage(pageNo){
 
 </div><!-- end div board -->
 
-
-<!-- <input type="hidden" name="authorCode"/>
-<input type="hidden" name="authorCodes"/> -->
 <input type="hidden" name="pageIndex" value="<c:out value='${eprExcRecRepVO.pageIndex}'/>"/>
 <input type="hidden" name="searchCondition" value="1"/>
 </form:form>

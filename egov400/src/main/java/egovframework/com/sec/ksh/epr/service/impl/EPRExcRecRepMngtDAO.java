@@ -5,7 +5,6 @@ import java.util.List;
 import egovframework.com.cmm.service.impl.EgovComAbstractDAO;
 import egovframework.com.sec.ksh.epr.service.EPRExcRecRep;
 import egovframework.com.sec.ksh.epr.service.EPRExcRecRepVO;
-import egovframework.com.sec.ram.service.AuthorManageVO;
 
 import org.springframework.stereotype.Repository;
 
@@ -73,7 +72,7 @@ public class EPRExcRecRepMngtDAO extends EgovComAbstractDAO {
 	 * @exception Exception
 	 */
     public int selectEPRExcRecRepListTotCnt(EPRExcRecRepVO eprExcRecRepVO)  throws Exception {
-        return (Integer)selectOne("eprExcRecRepMngtDAO.selectEPRExcRecRepListTotCnt", eprExcRecRepVO);
+        return (Integer) selectOne("eprExcRecRepMngtDAO.selectEPRExcRecRepListTotCnt", eprExcRecRepVO);
     }
     
 }

@@ -53,11 +53,11 @@
 		<col style="width: 16%;"><col style="width: ;">
 	</colgroup>
 	<tbody>
-		<!-- 수행실적신고일련번호 -->
+		<!-- 수행년도 -->
 		<tr>
-			<th>수행실적신고일련번호</th>
+			<th>수행년도</th>
 			<td class="left">
-			    <div><c:out value="${eprExcRecRep.excPerRepSeq}"/></div>
+				<div><c:out value="${eprExcRecRep.excDate}"/></div>
 			</td>
 		</tr>
 		<!-- 수행실적신고명 -->
@@ -65,55 +65,6 @@
 			<th>수행실적신고명</th>
 			<td class="left">
 				<div><c:out value="${eprExcRecRep.excPerRepName}"/></div>
-			</td>
-		</tr>
-		<!-- 진행상태코드 -->
-		<tr>
-			<th>진행상태코드</th>
-			<td class="left">
-				<div><c:out value="${eprExcRecRep.progrsStatCode}"/></div>
-			</td>
-		</tr>
-		<!-- 진행상태코드명 -->
-		<tr>
-			<th>진행상태코드명</th>
-			<td class="left">
-				<div><c:out value="${eprExcRecRep.progrsStatCodeNm}"/></div>
-			</td>
-		</tr>
-		<!-- 수행일자 -->
-		<tr>
-			<th>수행일자</th>
-			<td class="left">
-				<div><c:out value="${eprExcRecRep.excDate}"/></div>
-			</td>
-		</tr>
-		<!-- 등록일자 -->
-		<tr>
-			<th>등록일자</th>
-			<td class="left">
-				<div><c:out value="${eprExcRecRep.regDate}"/></div>
-			</td>
-		</tr>
-		<!-- 수정일자 -->
-		<tr>
-			<th>수정일자</th>
-			<td class="left">
-				<div><c:out value="${eprExcRecRep.cngDate}"/></div>
-			</td>
-		</tr>
-		<!-- 등록자ID -->
-		<tr>
-			<th>등록자ID</th>
-			<td class="left">
-				<div><c:out value="${eprExcRecRep.regId}"/></div>
-			</td>
-		</tr>
-		<!-- 수정자ID -->
-		<tr>
-			<th>수정자ID</th>
-			<td class="left">
-				<div><c:out value="${eprExcRecRep.cngId}"/></div>
 			</td>
 		</tr>
 	</tbody>
@@ -150,9 +101,7 @@
 		<th>장비명</th>
 		<th>규격</th>
 		<th>등록번호</th>
-		<th>등급코드</th>
-		<th>등록일자</th>
-		<th>등록자ID</th>
+		<th>등급코드명</th>
 		<th>삭제</th>
 	</tr>
 	</thead>
@@ -169,8 +118,6 @@
 		<td><c:out value="${eprEqpmnRep.stndrd}"/></td>
 		<td><c:out value="${eprEqpmnRep.regNo}"/></td>
 		<td><c:out value="${eprEqpmnRep.gradCode}"/></td>
-		<td><c:out value="${eprEqpmnRep.regDate}"/></td>
-		<td><c:out value="${eprEqpmnRep.regId}"/></td>
 		<td><a href="/sec/ksh/epr/EPRExcRecRepDelete.do?excPerRepSeq=${eprExcRecRep.excPerRepSeq}&eqpmnNo=${eprEqpmnRep.eqpmnNo}" type="button" class="s_btn"/>삭제</td>
 	</tr>
 	</c:forEach>
@@ -183,7 +130,7 @@
 	<div class="search_box" title="<spring:message code="common.searchCondition.msg" />">
 		<ul>
 			<li style="border: 0px solid #d2d2d2;">
-				<span class="btn_b"><a href="<c:url value='/sec/ksh/epr/insertEPRPerRepVw.do'/>" onClick="javascript:fncAddEPRPerRepInsert();"  title="<spring:message code="button.create" /> <spring:message code="input.button" />"><spring:message code="button.create" /></a></span>
+				<span class="btn_b"><a href="<c:url value='/sec/ksh/epr/insertEPRPerRepVw.do?excPerRepSeq=${excPerRepSeq}'/>" onClick="javascript:fncAddEPRPerRepInsert();"  title="<spring:message code="button.create" /> <spring:message code="input.button" />"><spring:message code="button.create" /></a></span>
 			</li>
 		</ul>
 	</div>

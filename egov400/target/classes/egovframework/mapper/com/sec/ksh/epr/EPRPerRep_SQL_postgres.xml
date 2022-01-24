@@ -40,4 +40,34 @@
             WHERE EXC_PER_REP_SEQ=#{excPerRepSeq}
         
     </delete>
+    
+    <insert id="insertEPRPerRep" parameterType="egovframework.com.sec.ksh.epr.service.EPRPerRep">
+        
+		INSERT INTO PUBLIC.TB_PER_REP(
+			EXC_PER_REP_SEQ
+			, PER_NO
+			, SERVC_NAME
+			, SERVC_SE_CODE
+			, CNTRCT_AMOUNT
+			, CHARGER_NAME
+			, SERVC
+			, REG_DATE
+			, REG_ID
+			, CNG_DATE
+			, CNG_ID
+		) VALUES(
+			#{excPerRepSeq}
+			, nextval('per_rep_seq')
+			, #{servcName}
+			, #{servcSeCode}
+			, #{cntrctAmount}
+			, #{chargerName}
+			, #{servc}
+			, NOW()
+			, #{regId}
+			, NOW()
+			, #{cngId}
+		)
+					
+    </insert>
 </mapper>

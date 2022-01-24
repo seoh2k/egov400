@@ -3,6 +3,7 @@ package egovframework.com.sec.ksh.epr.service.impl;
 import java.util.List;
 
 import egovframework.com.cmm.service.impl.EgovComAbstractDAO;
+import egovframework.com.sec.ksh.epr.service.EPRPerRep;
 import egovframework.com.sec.ksh.epr.service.EPRPerRepVO;
 
 import org.springframework.stereotype.Repository;
@@ -17,6 +18,10 @@ public class EPRPerRepDAO extends EgovComAbstractDAO {
     
     public void deleteEPRPerRepAll(String excPerRepSeq) throws Exception {
         delete("eprPerRepDAO.deleteEPRPerRepAll", excPerRepSeq);
+    }
+    
+    public void insertEPRPerRep(EPRPerRep eprPerRep) throws Exception {
+        insert("eprPerRepDAO.insertEPRPerRep", eprPerRep);
     }
     
 }

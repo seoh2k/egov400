@@ -2,9 +2,6 @@ package egovframework.com.sec.ksh.epr.service;
 
 import java.util.List;
 
-import egovframework.com.sec.ram.service.AuthorManage;
-import egovframework.com.sec.ram.service.AuthorManageVO;
-
 /**
  * 수행실적목록에 관한 서비스 인터페이스 클래스를 정의한다.
  * @author 공통서비스 개발팀 이문준
